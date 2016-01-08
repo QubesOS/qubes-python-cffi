@@ -1,11 +1,7 @@
 #!/usr/bin/make -f
 
-export PYBUILD_DESTDIR_python2=debian/python-cffi
-export PYBUILD_DESTDIR_python3=debian/python3-cffi
-export PYBUILD_EXT_DESTDIR_python2=debian/python-cffi-backend
-export PYBUILD_EXT_DESTDIR_python3=debian/python3-cffi-backend
-export PYBUILD_EXT_DESTDIR_python2-dbg=debian/python-cffi-backend-dbg
-export PYBUILD_EXT_DESTDIR_python3-dbg=debian/python3-cffi-backend-dbg
+export PYBUILD_NAME=cffi
+export PYBUILD_AFTER_INSTALL=find {destdir} -name '*.so' | python3 -c 'import os; src=input().strip(); src=os.path.relpath(src); dst=src.replace("cffi", "cffi-backend", 1); os.makedirs(os.path.dirname(dst)); os.rename(src, dst); print("RENAMED %s -> %s" % (src, dst))'
 
 # Temporary hack until cffi defaults to calling virtualenv with --never-download
 export VIRTUALENV_DOWNLOAD=no
@@ -35,3 +31,4 @@ override_dh_strip:
 override_dh_clean:
 	dh_clean
 	rm -rf $(wildcard testing/*/snippets/*/build testing/*/snippets/*/dist testing/*/snippets/*/*.egg-info)
+	rm -rf debian/python-cffi-dbg debian/python3-cffi-dbg
