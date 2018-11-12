@@ -1,4 +1,4 @@
-python-cffi (1.9.1-2~bpo8+1) jessie-backports; urgency=medium
+python-cffi (1.9.1-2~bpo8+1) jessie; urgency=medium
 
   * Rebuild for jessie-backports, carrying this change from 1.4.2-2~bpo8+1:
     - Breaks: Packages in jessie that aren't compatible with cffi 1.0.
